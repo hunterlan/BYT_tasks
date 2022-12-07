@@ -1,6 +1,6 @@
 # BYT_tasks
 
-Task 4-5 Pattern design
+**Task 5-6 Pattern design**
 
 I chose: 
 
@@ -10,3 +10,7 @@ I chose:
 ## How to run project?
 
 ```dotnet run --project <path_to_project_folder>```
+
+**Task 7-8 Unit test**
+
+Task: Fix bugs in the code and write unit tests
