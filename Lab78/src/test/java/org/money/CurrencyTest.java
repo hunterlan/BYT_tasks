@@ -14,6 +14,7 @@ public class CurrencyTest {
 		SEK = new Currency("SEK", 0.15);
 		DKK = new Currency("DKK", 0.20);
 		EUR = new Currency("EUR", 1.5);
+		NOK = new Currency("NOK", 0.0);
 	}
 
 	@Test
@@ -32,17 +33,25 @@ public class CurrencyTest {
 	
 	@Test
 	public void testSetRate() {
-		fail("Write test case here");
+		double valueToSet = 1.1;
+		double previousValue = NOK.getRate();
+		NOK.setRate(valueToSet);
+		double currentValue = NOK.getRate();
+		assertTrue(currentValue != previousValue && valueToSet == currentValue);
 	}
 	
 	@Test
 	public void testGlobalValue() {
-		fail("Write test case here");
+		double expectedValue = 150;
+		double currentValue = EUR.universalValue(100);
+		assertEquals(expectedValue, currentValue, 0);
 	}
 	
 	@Test
 	public void testValueInThisCurrency() {
-		fail("Write test case here");
+		double expectedValue = 10;
+		double realValue = EUR.valueInThisCurrency(100d, SEK);
+		assertEquals(expectedValue, realValue, 0);
 	}
 
 }

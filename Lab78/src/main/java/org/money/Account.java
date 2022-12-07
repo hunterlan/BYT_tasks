@@ -6,8 +6,8 @@ public class Account {
 	private Money content;
 	private Hashtable<String, TimedPayment> timedpayments = new Hashtable<String, TimedPayment>();
 
-	Account(String name, Currency currency) {
-		this.content = new Money(0, currency);
+	Account(Currency currency) {
+		this.content = new Money(0d, currency);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class Account {
 	 */
 	public void tick() {
 		for (TimedPayment tp : timedpayments.values()) {
-			tp.tick(); tp.tick();
+			tp.tick();
 		}
 	}
 	

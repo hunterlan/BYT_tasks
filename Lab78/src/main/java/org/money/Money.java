@@ -3,7 +3,7 @@ package org.money;
 import javax.naming.OperationNotSupportedException;
 
 public class Money implements Comparable {
-	private int amount;
+	private double amount;
 	private Currency currency;
 
 	/**
@@ -11,7 +11,7 @@ public class Money implements Comparable {
 	 * @param amount	The amount of money
 	 * @param currency	The currency of the money
 	 */
-	Money (Integer amount, Currency currency) {
+	Money (Double amount, Currency currency) {
 		this.amount = amount;
 		this.currency = currency;
 	}
@@ -20,7 +20,7 @@ public class Money implements Comparable {
 	 * Return the amount of money.
 	 * @return Amount of money in Double type.
 	 */
-	public Integer getAmount() {
+	public Double getAmount() {
 		return this.amount;
 	}
 	
@@ -47,7 +47,7 @@ public class Money implements Comparable {
 	 * Gets the universal value of the Money, according the rate of its Currency.
 	 * @return The value of the Money in the "universal currency".
 	 */
-	public Integer universalValue() {
+	public Double universalValue() {
 		return this.currency.universalValue(this.amount);
 	}
 	
@@ -57,7 +57,7 @@ public class Money implements Comparable {
 	 * @return A Boolean indicating if the two monies are equal.
 	 */
 	public Boolean equals(Money other) {
-		Integer amountCurrentCurrency = this.currency.valueInThisCurrency(other.amount, this.currency);
+		Double amountCurrentCurrency = this.currency.valueInThisCurrency(other.amount, other.currency);
 		return this.amount == amountCurrentCurrency;
 	}
 	
@@ -68,7 +68,7 @@ public class Money implements Comparable {
 	 * (Remember to convert the other Money before adding the amounts)
 	 */
 	public Money add(Money other) {
-		Integer finalAmount = this.currency.valueInThisCurrency(other.amount, this.currency) + this.amount;
+		Double finalAmount = this.currency.valueInThisCurrency(other.amount, other.currency) + this.amount;
 		return new Money(finalAmount, this.currency);
 	}
 
@@ -79,7 +79,7 @@ public class Money implements Comparable {
 	 * (Again, remember converting the value of the other Money to this Currency)
 	 */
 	public Money sub(Money other) {
-		Integer finalAmount = Math.abs(this.currency.valueInThisCurrency(other.amount, this.currency) + this.amount);
+		Double finalAmount = this.amount - this.currency.valueInThisCurrency(other.amount, other.currency);
 		return new Money(finalAmount, this.currency);
 	}
 	
@@ -94,9 +94,12 @@ public class Money implements Comparable {
 	 * Negate the amount of money, i.e. if the amount is 10.0 SEK the negation returns -10.0 SEK
 	 * @return A new instance of the money class initialized with the new negated money amount.
 	 */
-	/*public Money negate() {
-		throw new OperationNotSupportedException();
-	}*/
+	public Money negate() {
+		if (this.amount < 0) { return this; }
+		else {
+			return new Money(-this.amount, this.currency);
+		}
+	}
 	
 	/**
 	 * Compare two Monies.
@@ -109,7 +112,7 @@ public class Money implements Comparable {
 	 */
 	public int compareTo(Object other) {
 		Money compareMoney = (Money) other;
-		Integer amountMoneyCurrentCurrency = this.currency.valueInThisCurrency(compareMoney.amount, this.currency);
+		Double amountMoneyCurrentCurrency = this.currency.valueInThisCurrency(compareMoney.amount, compareMoney.currency);
 		if (this.amount == amountMoneyCurrentCurrency) return 0;
 		else if (this.amount < amountMoneyCurrentCurrency) return -1;
 		else return 1;

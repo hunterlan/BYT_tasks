@@ -24,8 +24,8 @@ public class Currency {
 	 * @param amount An amount of cash of this currency.
 	 * @return The value of amount in the "universal currency"
 	 */
-	public Integer universalValue(Integer amount) {
-		return amount * (int) Math.round(rate);
+	public Double universalValue(double amount) {
+		return amount * rate;
 	}
 
 	/** Get the name of this Currency.
@@ -54,9 +54,9 @@ public class Currency {
 	/** Convert an amount from another Currency to an amount in this Currency
 	 * 
 	 * @param amount Amount of the other Currency
-	 * @param othercurrency The other Currency
 	*/
-	public Integer valueInThisCurrency(Integer amount, Currency othercurrency) {
-		return othercurrency.universalValue(amount);
+	public Double valueInThisCurrency(Double amount, Currency otherCurrency) {
+		double universalValue = otherCurrency.universalValue(amount);
+		return universalValue / this.rate;
 	}
 }
