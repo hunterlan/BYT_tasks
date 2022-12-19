@@ -1,5 +1,6 @@
 ﻿using MediatrPattern;
 using ObjectPoolPattern;
+using task45.ChainResponsobilityPattern;
 
 class Component1 : BaseComponent
     {
@@ -82,5 +83,35 @@ class Component1 : BaseComponent
             pool.ReturnStudent(ref firstStudent);
             Console.WriteLine($"Can I get one more student? {pool.TryGetStudnet()}");
             Console.WriteLine(firstStudent.FirstName);
+            
+            // Chain responsibility
+            var plus = new PlusOperation();
+            var minus = new MinusOperation();
+            var multiply = new MultiplyOperation();
+            var divide = new DivideOperation();
+
+            plus.SetNext(minus).SetNext(multiply).SetNext(divide);
+
+            string input;
+            Console.WriteLine("Write first number, operation and second number. E.g. 2 + 5\nIf you want to exit, write \"exit\"");
+            while (true)
+            {
+                input = Console.ReadLine();
+                if (!input.Equals("exit"))
+                {
+                    try
+                    {
+                        Console.WriteLine(plus.Handle(input));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
     }
